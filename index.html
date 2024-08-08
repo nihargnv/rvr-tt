@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>RVRJC CSM-A Time Table</title>
+
+    <style>
+      .current {
+        background: #d6f730c3;
+      }
+      table {
+        width: 70%;
+        margin: auto;
+        border: 3px solid #000;
+        text-align: center;
+      }
+      td,
+      tr,
+      th {
+        padding: 2px;
+        border: 2px solid black;
+        font-family: sans-serif;
+        font-size: 32px;
+      }
+      td:hover {
+        background: #e8e1e1;
+      }
+      #time {
+        text-align: center;
+        font-family: sans-serif;
+        font-size: 1.5rem;
+      }
+      @media screen and (max-width: 750px) {
+        body {
+          overflow-x: hidden;
+          margin: 0;
+          padding: 0;
+        }
+        table {
+          width: 100%;
+          margin: auto;
+          border: 2px solid #000;
+          text-align: center;
+          box-sizing: border-box; /* Include padding and border in width calculation */
+        }
+
+        td,
+        tr,
+        th {
+          font-size: 17px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <center>
+      <h1>Time Table</h1>
+    </center>
+    <table>
+      <tr>
+        <th>Day</th>
+        <th>8:00</th>
+        <th>9:00</th>
+        <th>10:00</th>
+        <th>11:00</th>
+        <th>12:00</th>
+        <th>1:00</th>
+        <th>2:00</th>
+      </tr>
+
+      <tr>
+        <th id="1">Mon</th>
+        <td colspan="2" id="1-8">214</td>
+        <td id="1-10">212</td>
+        <td rowspan="6" id="lunch">Lunch</td>
+        <td id="1-12">211</td>
+        <td id="1-1">213</td>
+        <td id="1-2">SL-1</td>
+      </tr>
+
+      <tr>
+        <th id="2">Tue</th>
+        <td colspan="3" id="2-8">251(HT-1)</td>
+        <td colspan="2" id="2-12">215</td>
+        <td id="2-2">213</td>
+      </tr>
+
+      <tr>
+        <th id="3">Wed</th>
+        <td id="3-8">213</td>
+        <td id="3-9">211</td>
+        <td id="3-10">MC3</td>
+        <td colspan="2" id="3-12">215</td>
+        <td id="3-2">Lib/Sports</td>
+      </tr>
+
+      <tr>
+        <th id="4">Thu</th>
+        <td id="4-8">212</td>
+        <td id="4-9">MC3</td>
+        <td id="4-10">214</td>
+        <td colspan="2" id="4-12">SL1(HT-1)</td>
+        <td id="4-2">211</td>
+      </tr>
+
+      <tr>
+        <th id="5">Fri</th>
+        <td colspan="3" id="5-8">252(HT-1)</td>
+        <td id="5-12">212</td>
+        <td id="5-1">SL-1</td>
+        <td id="5-2">213</td>
+      </tr>
+      <tr>
+        <th id="6">Sat</th>
+        <td colspan="3" id="6-8">253(HT-1)</td>
+        <td id="6-12">211</td>
+        <td id="6-1">214</td>
+        <td id="6-2">212</td>
+      </tr>
+    </table>
+    <p id="time"></p>
+    <script>
+      const date = new Date();
+      const weeks = {
+        0: "Sun",
+        1: "Mon",
+        2: "Tue",
+        3: "Wed",
+        4: "Thu",
+        5: "Fri",
+        6: "Sat",
+      };
+
+      // Highlight the current day
+      const dayCell = document.getElementById(`${date.getDay()}`);
+      dayCell.classList.add("current");
+
+      // Determine the current hour and highlight the corresponding cell
+      var currentHour = date.getHours();
+      let hourId;
+      var msg;
+      if (currentHour > 12 && currentHour < 16) {
+        currentHour -= 12;
+      }
+
+      hourId = `${date.getDay()}-${currentHour}`;
+
+      if (date.getDay == 1 && currentHour >= 8 && currentHour <= 9) {
+        hourId = `${date.getDay()}-8`;
+      } else if (date.getDay == 2 && currentHour >= 8 && currentHour <= 10) {
+        hourId = `${date.getDay()}-8`;
+      } else if (date.getDay == 2 && (currentHour >= 12 || currentHour <= 1)) {
+        hourId = `${date.getDay()}-12`;
+      } else if (
+        (date.getDay == 3 || date.getDay == 4) &&
+        (currentHour == 12 || currentHour <= 1)
+      ) {
+        hourId = `${date.getDay()}-12`;
+      } else if (
+        (date.getDay == 5 || date.getDay == 6) &&
+        currentHour >= 8 &&
+        currentHour <= 10
+      ) {
+        hourId = `${date.getDay()}-8`;
+      }
+
+      if (date.getDay() > 0 && currentHour == 11) {
+        hourId = "lunch";
+      }
+
+      // Highlight the cell if the hour matches
+      if (hourId) {
+        const hourCell = document.getElementById(hourId);
+        if (hourCell) {
+          msg =
+            "Current Class is CM-" + document.getElementById(hourId).innerText;
+          hourCell.classList.add("current");
+        } else {
+          msg = "No Classes Scheduled at this time. Enjoy Pandago.";
+        }
+      }
+
+      // Display current day and hour in the header
+      document.getElementById(
+        "time"
+      ).innerHTML = `${date.getDate()}:${date.getMonth()}:${
+        date.getFullYear() % 100
+      }, ${
+        weeks[date.getDay()]
+      } ${date.getHours()}:${date.getMinutes()} -  ${msg}`;
+    </script>
+  </body>
+</html>
+

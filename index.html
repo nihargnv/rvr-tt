@@ -16,11 +16,11 @@
       }
 
       .current {
-        background: #c3df38c3;
+        background: #d6f730c3;
       }
 
       table {
-        width: 80%;
+        width: 100%;
         margin: auto;
         border: 3px solid #000;
         text-align: center;
@@ -158,79 +158,84 @@
       </tr>
     </table>
     <p id="time"></p>
-    <footer>Made by <a href="https://nihargnv.github.io/portfolio/" target="_blank">Nihar GNV</a></footer>
+    <footer>Made by Nihar GNV</footer>
     <script>
-      const date = new Date();
-      const weeks = {
-        0: "Sun",
-        1: "Mon",
-        2: "Tue",
-        3: "Wed",
-        4: "Thu",
-        5: "Fri",
-        6: "Sat",
-      };
+      function updateTimeAndHighlight() {
+        const date = new Date();
+        const weeks = {
+          0: "Sun",
+          1: "Mon",
+          2: "Tue",
+          3: "Wed",
+          4: "Thu",
+          5: "Fri",
+          6: "Sat",
+        };
 
-      // Determine the current hour and highlight the corresponding cell
-      var currentHour = date.getHours();
-      var toDay = date.getDay();
-      var hourId, msg;
-      if (currentHour > 12 && currentHour <= 19) {
-        currentHour -= 12;
-      }
+        // Determine the current hour and highlight the corresponding cell
+        let toDay = date.getDay();
+        let currentHour = date.getHours();
+        let hourId, msg;
 
-      hourId = `${toDay}-${currentHour}`;
-
-      if (toDay == 1 && (currentHour == 8 || currentHour == 9)) {
-        hourId = `${toDay}-8`;
-      } else if (
-        (toDay == 2 || toDay == 5 || toDay == 6) &&
-        currentHour >= 8 &&
-        currentHour <= 10
-      ) {
-        hourId = `${toDay}-8`;
-      } else if (
-        (toDay == 2 || toDay == 3 || toDay == 4) &&
-        (currentHour == 12 || currentHour == 1)
-      ) {
-        hourId = `${toDay}-12`;
-      }
-
-      if (toDay > 0 && currentHour == 11) {
-        hourId = "lunch";
-      }
-
-      // Highlight the cell if the hour matches
-      if (hourId) {
-        const hourCell = document.getElementById(hourId);
-        if (hourCell) {
-          console.log(hourCell);
-          if (hourId == "lunch") {
-            msg = "Lunch Time! 	&#x1F957;";
-          } else {
-            msg =
-              "Current Class is CM-" +
-              document.getElementById(hourId).innerText;
-          }
-          hourCell.classList.add("current");
-        } else {
-          msg = "No Classes Scheduled at this time. Enjoy.";
+        if (currentHour > 12 && currentHour <= 19) {
+          currentHour -= 12;
         }
-      }
-      if (toDay == 0) {
-        msg = "Sunday ra babu!	&#x263A;";
-      } else {
-        // Highlight the current day
-        const dayCell = document.getElementById(`${toDay}`);
-        dayCell.classList.add("current");
+
+        hourId = `${toDay}-${currentHour}`;
+
+        if (toDay == 1 && (currentHour == 8 || currentHour == 9)) {
+          hourId = `${toDay}-8`;
+        } else if (
+          (toDay == 2 || toDay == 5 || toDay == 6) &&
+          currentHour >= 8 &&
+          currentHour <= 10
+        ) {
+          hourId = `${toDay}-8`;
+        } else if (
+          (toDay == 2 || toDay == 3 || toDay == 4) &&
+          (currentHour == 12 || currentHour == 1)
+        ) {
+          hourId = `${toDay}-12`;
+        }
+
+        if (toDay > 0 && currentHour == 11) {
+          hourId = "lunch";
+        }
+
+        // Highlight the cell if the hour matches
+        if (hourId) {
+          const hourCell = document.getElementById(hourId);
+          if (hourCell) {
+            if (hourId == "lunch") {
+              msg = "Lunch Time! &#x1F957;";
+            } else {
+              msg = "Current Class is CM-" + hourCell.innerText;
+            }
+            hourCell.classList.add("current");
+          } else {
+            msg = "No Classes Scheduled at this time. Enjoy.";
+          }
+        }
+        if (toDay == 0) {
+          msg = "Sunday ra babu! &#x263A;";
+        } else {
+          // Highlight the current day
+          const dayCell = document.getElementById(`${toDay}`);
+          dayCell.classList.add("current");
+        }
+
+        // Display current day and hour in the header
+        document.getElementById("time").innerHTML = `${date.getDate()}:${
+          date.getMonth() + 1
+        }:${date.getFullYear() % 100}, ${weeks[toDay]} ${currentHour}:${date
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")} -  ${msg}`;
       }
 
-      // Display current day and hour in the header
-      document.getElementById(
-        "time"
-      ).innerHTML = `${date.getDate()}:${date.getMonth()}:${
-        date.getFullYear() % 100
-      }, ${weeks[toDay]} ${currentHour}:${date.getMinutes()} -  ${msg}`;
+      // Update time and highlight every minute
+      updateTimeAndHighlight();
+      setInterval(updateTimeAndHighlight, 20000);
     </script>
   </body>
 </html>

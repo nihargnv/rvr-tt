@@ -7,50 +7,86 @@
     <title>RVRJC CSM-A Time Table</title>
 
     <style>
-      .current {
-        background: #d6f730c3;
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
       }
+
+      .current {
+        background: #c3df38c3;
+      }
+
       table {
-        width: 70%;
+        width: 80%;
         margin: auto;
         border: 3px solid #000;
         text-align: center;
+        box-sizing: border-box; /* Include padding and border in width calculation */
       }
+
       td,
       tr,
       th {
-        padding: 2px;
+        padding: 5px;
         border: 2px solid black;
         font-family: sans-serif;
         font-size: 32px;
       }
+
       td:hover {
         background: #e8e1e1;
       }
+
       #time {
         text-align: center;
         font-family: sans-serif;
         font-size: 1.5rem;
       }
+
       @media screen and (max-width: 750px) {
-        body {
-          overflow-x: hidden;
-          margin: 0;
-          padding: 0;
-        }
         table {
           width: 100%;
-          margin: auto;
-          border: 2px solid #000;
-          text-align: center;
-          box-sizing: border-box; /* Include padding and border in width calculation */
+          font-size: 14px;
         }
-
         td,
-        tr,
         th {
-          font-size: 17px;
+          padding: 3px;
+          font-size: 14px;
         }
+        #time {
+          font-size: 1.2rem;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        table {
+          width: 100%;
+          font-size: 12px;
+        }
+        td,
+        th {
+          padding: 2px;
+          font-size: 12px;
+        }
+        #time {
+          font-size: 1rem;
+        }
+      }
+
+      /* Footer styling */
+      footer {
+        text-align: center;
+        margin-top: auto;
+        font-family: sans-serif;
+        font-size: 1rem;
+        color: #555;
+        padding: 10px 0;
+        background-color: #f1f1f1;
+        width: 100%;
+        box-sizing: border-box;
       }
     </style>
   </head>
@@ -122,6 +158,7 @@
       </tr>
     </table>
     <p id="time"></p>
+    <footer>Made by <a href="#">Nihar GNV</a></footer>
     <script>
       const date = new Date();
       const weeks = {
@@ -134,40 +171,32 @@
         6: "Sat",
       };
 
-      // Highlight the current day
-      const dayCell = document.getElementById(`${date.getDay()}`);
-      dayCell.classList.add("current");
-
       // Determine the current hour and highlight the corresponding cell
       var currentHour = date.getHours();
-      let hourId;
-      var msg;
-      if (currentHour > 12 && currentHour < 16) {
+      var toDay = date.getDay();
+      var hourId, msg;
+      if (currentHour > 12 && currentHour <= 19) {
         currentHour -= 12;
       }
 
-      hourId = `${date.getDay()}-${currentHour}`;
+      hourId = `${toDay}-${currentHour}`;
 
-      if (date.getDay == 1 && currentHour >= 8 && currentHour <= 9) {
-        hourId = `${date.getDay()}-8`;
-      } else if (date.getDay == 2 && currentHour >= 8 && currentHour <= 10) {
-        hourId = `${date.getDay()}-8`;
-      } else if (date.getDay == 2 && (currentHour >= 12 || currentHour <= 1)) {
-        hourId = `${date.getDay()}-12`;
+      if (toDay == 1 && (currentHour == 8 || currentHour == 9)) {
+        hourId = `${toDay}-8`;
       } else if (
-        (date.getDay == 3 || date.getDay == 4) &&
-        (currentHour == 12 || currentHour <= 1)
-      ) {
-        hourId = `${date.getDay()}-12`;
-      } else if (
-        (date.getDay == 5 || date.getDay == 6) &&
+        (toDay == 2 || toDay == 5 || toDay == 6) &&
         currentHour >= 8 &&
         currentHour <= 10
       ) {
-        hourId = `${date.getDay()}-8`;
+        hourId = `${toDay}-8`;
+      } else if (
+        (toDay == 2 || toDay == 3 || toDay == 4) &&
+        (currentHour == 12 || currentHour == 1)
+      ) {
+        hourId = `${toDay}-12`;
       }
 
-      if (date.getDay() > 0 && currentHour == 11) {
+      if (toDay > 0 && currentHour == 11) {
         hourId = "lunch";
       }
 
@@ -175,12 +204,25 @@
       if (hourId) {
         const hourCell = document.getElementById(hourId);
         if (hourCell) {
-          msg =
-            "Current Class is CM-" + document.getElementById(hourId).innerText;
+          console.log(hourCell);
+          if (hourId == "lunch") {
+            msg = "Lunch Time! 	&#x1F957;";
+          } else {
+            msg =
+              "Current Class is CM-" +
+              document.getElementById(hourId).innerText;
+          }
           hourCell.classList.add("current");
         } else {
           msg = "No Classes Scheduled at this time. Enjoy Pandago.";
         }
+      }
+      if (toDay == 0) {
+        msg = "Sunday ra babu!	&#x263A;";
+      } else {
+        // Highlight the current day
+        const dayCell = document.getElementById(`${toDay}`);
+        dayCell.classList.add("current");
       }
 
       // Display current day and hour in the header
@@ -188,10 +230,7 @@
         "time"
       ).innerHTML = `${date.getDate()}:${date.getMonth()}:${
         date.getFullYear() % 100
-      }, ${
-        weeks[date.getDay()]
-      } ${date.getHours()}:${date.getMinutes()} -  ${msg}`;
+      }, ${weeks[toDay]} ${currentHour}:${date.getMinutes()} -  ${msg}`;
     </script>
   </body>
 </html>
-

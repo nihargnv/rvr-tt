@@ -1,0 +1,199 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+body {
+  color: white;
+  background-color: rgb(22, 21, 21);
+  font-family: "Poppins", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* UTILITY CLASSES (FOR JS Manupulation) */
+.disp-none {
+  display: none;
+}
+
+/* END CLASSES */
+
+h1 {
+  text-align: center;
+}
+
+.tt-main {
+  margin-top: 12vh;
+}
+.tt-sec {
+  /* padding: 10px; */
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.sm {
+  font-size: 1.1rem;
+  width: 20%;
+}
+
+.pres {
+  width: 25%;
+  font-size: 1.5rem;
+}
+
+.util {
+  padding: 6px 12px;
+  background-color: rgb(60, 60, 60);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.sm p {
+  padding: 0;
+  margin: 0;
+}
+
+.pres p {
+  padding: 0;
+  margin: 0;
+}
+
+.dull {
+  color: rgb(184, 142, 142);
+}
+
+.btn-sm {
+  font-size: 1rem;
+  text-decoration: none;
+  color: white;
+  padding: 4px 6px;
+  background-color: rgb(180, 5, 180);
+  border-radius: 4px;
+  width: 200px;
+  text-align: center;
+  margin: 16px auto;
+}
+
+.task-main {
+  width: 75vw;
+  margin: auto;
+}
+
+.inp {
+  text-align: center;
+}
+
+#newTodo {
+  width: 500px;
+  margin: 5px 15px;
+  padding: 8px 14px;
+  font-size: 1.3rem;
+  border-radius: 8px;
+}
+
+.btn {
+  background-color: rgb(180, 5, 180);
+  padding: 8px 22px;
+  color: white;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: rgb(207, 24, 207);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  width: 70vw;
+  margin: 4vh auto;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.3rem;
+  padding: 10px;
+  background-color: rgb(40, 40, 40);
+  border-radius: 8px;
+  margin: 8px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+  /* width: 70vw; */
+}
+
+li.completed {
+  opacity: 0;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+  cursor: pointer;
+  zoom: 1.8;
+}
+
+.btn-edit {
+  font-size: 1.5rem;
+  color: rgb(255, 255, 255);
+  background-color: rgb(59, 53, 53);
+}
+
+footer {
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: rgb(22, 21, 21);
+}
+
+.nihar {
+  text-decoration: none;
+  color: rgb(187, 174, 174);
+}
+
+@media screen and (max-width: 700px) {
+  .tt-main {
+    margin-top: 5vh;
+  }
+  .tt-sec {
+    display: flex;
+    flex-direction: column;
+  }
+  .sm {
+    width: 80%;
+  }
+  .pres {
+    width: 90%;
+  }
+  .task-main {
+    width: 96vw;
+    margin: auto;
+  }
+  #newTodo {
+    width: 80vw;
+  }
+  .btn {
+    padding: 6px 20px;
+    font-size: 1.2rem;
+    margin-top: 1vh;
+  }
+  ul {
+    width: 90vw;
+  }
+  li {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+}

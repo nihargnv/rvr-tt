@@ -8,73 +8,73 @@ const weeks = {
   6: "Sat",
 };
 
+// Timetable for CM-3A (A-section)
 const TimingsTable = {
-  "1-8": "214",
-  "1-9": "214",
-  "1-10": "212",
-  "1-11": "l",
-  "1-12": "211",
-  "1-13": "213",
-  "1-14": "sl-1",
-  "2-8": "251",
-  "2-9": "251",
-  "2-10": "251",
-  "2-11": "l",
-  "2-12": "215",
-  "2-13": "215",
-  "2-14": "213",
-  "3-8": "213",
-  "3-9": "211",
-  "3-10": "mc3",
-  "3-11": "l",
-  "3-12": "215",
-  "3-13": "215",
-  "3-14": "lib",
-  "4-8": "212",
-  "4-9": "mc3",
-  "4-10": "214",
-  "4-11": "l",
-  "4-12": "sl-1",
-  "4-13": "sl-1",
-  "4-14": "211",
-  "5-8": "252",
-  "5-9": "252",
-  "5-10": "252",
-  "5-11": "l",
-  "5-12": "212",
-  "5-13": "sl-1",
-  "5-14": "213",
-  "6-8": "253",
-  "6-9": "253",
-  "6-10": "253",
-  "6-11": "l",
-  "6-12": "211",
-  "6-13": "214",
-  "6-14": "212",
+  "1-10": "CM314",
+  "1-11": "LIB",
+  "1-12": "CM313",
+  "1-13": "CM311",
+  "1-14": "LIB",
+  "1-15": "SPORTS",
+
+  "2-10": "CM313",
+  "2-11": "CM311",
+  "2-12": "CM312",
+  "2-13": "CM352",
+  "2-14": "CM352",
+  "2-15": "CM352",
+
+  "3-10": "CM314",
+  "3-11": "CM313",
+  "3-12": "CM315",
+  "3-13": "CM351",
+  "3-14": "CM351",
+  "3-15": "CM351",
+
+  "4-10": "CM312",
+  "4-11": "CM311",
+  "4-12": "CM314",
+  "4-13": "CM353",
+  "4-14": "CM353",
+  "4-15": "CM353",
+
+  "5-10": "CM315",
+  "5-11": "CM312",
+  "5-12": "CM311",
+  "5-13": "CM314",
+  "5-14": "LIB",
+  "5-15": "SPORTS",
+
+  "6-10": "CM312",
+  "6-11": "CM313",
+  "6-12": "CM315",
+  "6-13": "CMSL3",
+  "6-14": "CMSL3",
+  "6-15": "CMSL3"
 };
 
 const subNames = {
-  "211": "Probability and Statistics",
-  "212": "Discrete Mathematics",
-  "213": "Computer Organisation",
-  "214": "DBMS",
-  "215": "OOPS",
-  "251": "Prob. and Stat Lab",
-  "252": "DBMS Lab",
-  "253": "OOPS Lab",
-  "l": "Lunch",
-  "sl-1": "Web Development",
-  "mc3": "DTPI",
-  "lib": "Library and Sports"
+  "CM311": "Automata Theory & Formal Languages",
+  "CM312": "Computer Networks",
+  "CM313": "Data & Visual Analytics in AI",
+  "CM314": "Cloud Computing (PE - I)",
+  "CM315": "Internet of Things (OE - I)",
+
+  "CM351": "Data & Visual Analytics in AI Lab",
+  "CM352": "Cloud Computing Lab",
+  "CM353": "Summer Internship",
+  "CMSL3": "Soft Skills (SOC - III)",
+
+  "LIB": "Library",
+  "SPORTS": "Sports",
+  "l": "Lunch"
 };
 
 function updateTime() {
   const date = new Date();
 
-  // Determine the current hour and highlight the corresponding cell
   let toDay = date.getDay();
   let currentHour = date.getHours();
-  var timeTxt, timeKey, subKey, pTxt, nTxt, fTxt;
 
   const prev = document.getElementById("prev");
   const prevTxt = document.getElementById("prev-txt");
@@ -87,88 +87,62 @@ function updateTime() {
 
   const timeBar = document.getElementById("time-stat");
 
-  if (currentHour > 12) {
-    timeTxt = `${date.getDate()}-${date.getMonth() + 1}-${
-      date.getFullYear() % 100
-    }, ${weeks[toDay]} ${currentHour-12}:${date
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")} PM`;
-  } else {
-    timeTxt = `${date.getDate()}-${date.getMonth() + 1}-${
-      date.getFullYear() % 100
-    }, ${weeks[toDay]} ${currentHour}:${date
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")} AM`;
-  }
+  const formatHour = (h) => h > 12 ? `${h - 12} PM` : `${h} AM`;
 
+  // Format current time
+  const timeTxt = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear() % 100}, ${weeks[toDay]} ${formatHour(currentHour)}:${date.getMinutes().toString().padStart(2, "0")}`;
   timeBar.innerText = timeTxt;
 
-
-  if (toDay == 0) {
+  // Sunday check
+  if (toDay === 0) {
     prev.classList.add("disp-none");
     futr.classList.add("disp-none");
     presTxt.innerText = "It's Funday!";
+    return;
   }
-  else {
-    if (date.getHours() > 7 && date.getHours() < 15) {
-      timeKey = `${toDay}-${currentHour}`;
-      subKey = TimingsTable[timeKey];
-      nTxt = `CM${TimingsTable[timeKey].toUpperCase()}-${subNames[subKey]}`;
-      if(currentHour == 11){
-        nTxt = `${subNames[subKey]}`;
-        pTxt = `CM${TimingsTable[`${toDay}-${currentHour-1}`]}-${subNames[TimingsTable[`${toDay}-${currentHour-1}`]]}`;
-        
-        fTxt = `CM${TimingsTable[`${toDay}-${currentHour+1}`].toUpperCase()}-${subNames[TimingsTable[`${toDay}-${currentHour+1}`]]}`;
-      }
-      else if(currentHour == 8){
-        prev.classList.add('disp-none');
-        if(currentHour+1 == 11){
-          fTxt = `${subNames[TimingsTable[`${toDay}-${currentHour+1}`]]}`;
-        }
-        else{
-        fTxt = `CM${TimingsTable[`${toDay}-${currentHour+1}`].toUpperCase()}-${subNames[TimingsTable[`${toDay}-${currentHour+1}`]]}`;
-        }
-      }
-      else if(currentHour == 14){
-        futr.classList.add('disp-none');
-        if(currentHour-1 == 11){
-          pTxt = `${subNames[TimingsTable[`${toDay}-${currentHour-1}`]]}`;
-        }
-        else{
-        pTxt = `CM${TimingsTable[`${toDay}-${currentHour-1}`].toUpperCase()}-${subNames[TimingsTable[`${toDay}-${currentHour-1}`]]}`;
-        }
-      }
-      else{
-        if(currentHour+1 == 11){
-          fTxt = `${subNames[TimingsTable[`${toDay}-${currentHour+1}`]]}`;
-          pTxt = `CM${TimingsTable[`${toDay}-${currentHour-1}`].toUpperCase()}-${subNames[TimingsTable[`${toDay}-${currentHour-1}`]]}`;
-        }
-        else if(currentHour-1 == 11){
-          pTxt = `${subNames[TimingsTable[`${toDay}-${currentHour-1}`]]}`;
-          fTxt = `CM${TimingsTable[`${toDay}-${currentHour+1}`].toUpperCase()}-${subNames[TimingsTable[`${toDay}-${currentHour+1}`]]}`;
-        }
-        else{
-        pTxt = `CM${TimingsTable[`${toDay}-${currentHour-1}`]}-${subNames[TimingsTable[`${toDay}-${currentHour-1}`]]}`;
-        
-        fTxt = `CM${TimingsTable[`${toDay}-${currentHour+1}`].toUpperCase()}-${subNames[TimingsTable[`${toDay}-${currentHour+1}`]]}`;
-        }
-      }
-      
-      prevTxt.innerText = pTxt;
-      presTxt.innerText = nTxt;
-      futrTxt.innerText = fTxt;
+
+  // Valid class hour check (10 AM to 4 PM)
+  if (currentHour >= 10 && currentHour <= 15) {
+    const timeKey = `${toDay}-${currentHour}`;
+    const subKey = TimingsTable[timeKey];
+    const currentSub = subNames[subKey] || "Free";
+
+    const prevKey = `${toDay}-${currentHour - 1}`;
+    const nextKey = `${toDay}-${currentHour + 1}`;
+
+    const prevSub = subNames[TimingsTable[prevKey]] || null;
+    const nextSub = subNames[TimingsTable[nextKey]] || null;
+
+    // Set current
+    presTxt.innerText = subKey === "LIB" || subKey === "SPORTS" || subKey === "l" ? currentSub : `CM${subKey.slice(2)} - ${currentSub}`;
+
+    // Set previous
+    if (currentHour === 10 || !prevSub) {
+      prev.classList.add("disp-none");
+    } else {
+      prev.classList.remove("disp-none");
+      prevTxt.innerText = TimingsTable[prevKey] === "LIB" || TimingsTable[prevKey] === "SPORTS" || TimingsTable[prevKey] === "l"
+        ? prevSub
+        : `CM${TimingsTable[prevKey].slice(2)} - ${prevSub}`;
     }
-    else{
-      prev.classList.add('disp-none');
-      futr.classList.add('disp-none');
-      presTxt.innerText = "No Classes Scheduled!";
+
+    // Set next
+    if (currentHour === 15 || !nextSub) {
+      futr.classList.add("disp-none");
+    } else {
+      futr.classList.remove("disp-none");
+      futrTxt.innerText = TimingsTable[nextKey] === "LIB" || TimingsTable[nextKey] === "SPORTS" || TimingsTable[nextKey] === "l"
+        ? nextSub
+        : `CM${TimingsTable[nextKey].slice(2)} - ${nextSub}`;
     }
+  } else {
+    // Outside class hours
+    prev.classList.add("disp-none");
+    futr.classList.add("disp-none");
+    presTxt.innerText = "No Classes Scheduled!";
   }
-  
 }
 
-// Update time and highlight every minute
+// Initial call and refresh every 10 seconds
 updateTime();
 setInterval(updateTime, 10000);

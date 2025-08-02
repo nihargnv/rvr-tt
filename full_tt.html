@@ -3,9 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>RVRJC CM-A Time Table</title>
-
     <style>
       html,
       body {
@@ -24,7 +22,7 @@
         margin: auto;
         border: 3px solid #000;
         text-align: center;
-        box-sizing: border-box; /* Include padding and border in width calculation */
+        box-sizing: border-box;
       }
 
       td,
@@ -76,7 +74,6 @@
         }
       }
 
-      /* Footer styling */
       footer {
         text-align: center;
         margin-top: auto;
@@ -92,74 +89,107 @@
   </head>
 
   <body>
-    <center>
-      <h1>Time Table</h1>
-    </center>
+    <center><h1>Time Table</h1></center>
+
     <table>
       <tr>
         <th>Day</th>
-        <th>8:00</th>
-        <th>9:00</th>
         <th>10:00</th>
         <th>11:00</th>
         <th>12:00</th>
         <th>1:00</th>
         <th>2:00</th>
+        <th>3:00</th>
+        <th>4:00</th>
       </tr>
 
       <tr>
         <th id="1">Mon</th>
-        <td colspan="2" id="1-8">214</td>
-        <td id="1-10">212</td>
-        <td rowspan="6" id="lunch">Lunch</td>
-        <td id="1-12">211</td>
-        <td id="1-1">213</td>
-        <td id="1-2">SL-1</td>
+        <td id="1-10">CM314</td>
+        <td id="1-11">LIB</td>
+        <td id="1-12">CM313</td>
+        <td rowspan="6" id="lunch">LUNCH</td>
+        <td id="1-14">CM311</td>
+        <td id="1-15">LIB</td>
+        <td id="1-16">SPORTS</td>
       </tr>
 
       <tr>
         <th id="2">Tue</th>
-        <td colspan="3" id="2-8">251(HT-1)</td>
-        <td colspan="2" id="2-12">215</td>
-        <td id="2-2">213</td>
+        <td id="2-10">CM313</td>
+        <td id="2-11">CM311</td>
+        <td id="2-12">CM312</td>
+        <td id="2-14">CM352</td>
+        <td id="2-15">CM352</td>
+        <td id="2-16">CM352</td>
       </tr>
 
       <tr>
         <th id="3">Wed</th>
-        <td id="3-8">213</td>
-        <td id="3-9">211</td>
-        <td id="3-10">MC3</td>
-        <td colspan="2" id="3-12">215</td>
-        <td id="3-2">Lib/Sports</td>
+        <td id="3-10">CM314</td>
+        <td id="3-11">CM313</td>
+        <td id="3-12">CM315</td>
+        <td id="3-14">CM351</td>
+        <td id="3-15">CM351</td>
+        <td id="3-16">CM351</td>
       </tr>
 
       <tr>
         <th id="4">Thu</th>
-        <td id="4-8">212</td>
-        <td id="4-9">MC3</td>
-        <td id="4-10">214</td>
-        <td colspan="2" id="4-12">SL1(HT-1)</td>
-        <td id="4-2">211</td>
+        <td id="4-10">CM312</td>
+        <td id="4-11">CM311</td>
+        <td id="4-12">CM314</td>
+        <td id="4-14">CM353</td>
+        <td id="4-15">CM353</td>
+        <td id="4-16">CM353</td>
       </tr>
 
       <tr>
         <th id="5">Fri</th>
-        <td colspan="3" id="5-8">252(HT-1)</td>
-        <td id="5-12">212</td>
-        <td id="5-1">SL-1</td>
-        <td id="5-2">213</td>
+        <td id="5-10">CM315</td>
+        <td id="5-11">CM312</td>
+        <td id="5-12">CM311</td>
+        <td id="5-14">CM314</td>
+        <td id="5-15">LIB</td>
+        <td id="5-16">SPORTS</td>
       </tr>
+
       <tr>
         <th id="6">Sat</th>
-        <td colspan="3" id="6-8">253(HT-1)</td>
-        <td id="6-12">211</td>
-        <td id="6-1">214</td>
-        <td id="6-2">212</td>
+        <td id="6-10">CM312</td>
+        <td id="6-11">CM313</td>
+        <td id="6-12">CM315</td>
+        <td id="6-14">CMSL3</td>
+        <td id="6-15">CMSL3</td>
+        <td id="6-16">CMSL3</td>
       </tr>
     </table>
+
     <p id="time"></p>
-    <footer>Made by <a href="https://nihargnv.github.io/portfolio/" target="_blank">Nihar GNV</a></footer>
+
+    <footer>
+      Made by
+      <a href="https://nihargnv.github.io/portfolio/" target="_blank"
+        >Nihar GNV</a
+      >
+    </footer>
+
     <script>
+      const subNames = {
+        "CM311": "Automata Theory & Formal Languages",
+        "CM312": "Computer Networks",
+        "CM313": "Data & Visual Analytics in AI",
+        "CM314": "Cloud Computing (PE - I)",
+        "CM315": "Internet of Things (OE - I)",
+        "CM351": "Data & Visual Analytics Lab",
+        "CM352": "Cloud Computing Lab",
+        "CM353": "Summer Internship",
+        "CMSL3": "Soft Skills",
+        "LIB": "Library",
+        "SPORTS": "Sports",
+        "LUNCH": "Lunch Break"
+      };
+
       function updateTimeAndHighlight() {
         const date = new Date();
         const weeks = {
@@ -172,68 +202,45 @@
           6: "Sat",
         };
 
-        // Determine the current hour and highlight the corresponding cell
         let toDay = date.getDay();
         let currentHour = date.getHours();
-        let hourId, msg;
+        let hourId = `${toDay}-${currentHour}`;
+        let msg = "No Classes Scheduled at this time. Enjoy.";
 
-        if (currentHour > 12 && currentHour <= 19) {
-          currentHour -= 12;
-        }
-
-        hourId = `${toDay}-${currentHour}`;
-
-        if (toDay == 1 && (currentHour == 8 || currentHour == 9)) {
-          hourId = `${toDay}-8`;
-        } else if (
-          (toDay == 2 || toDay == 5 || toDay == 6) &&
-          currentHour >= 8 &&
-          currentHour <= 10
-        ) {
-          hourId = `${toDay}-8`;
-        } else if (
-          (toDay == 2 || toDay == 3 || toDay == 4) &&
-          (currentHour == 12 || currentHour == 1)
-        ) {
-          hourId = `${toDay}-12`;
-        }
-
-        if (toDay > 0 && currentHour == 11) {
+        if (toDay === 0) {
+          msg = "Sunday ra babu! ☺";
+        } else if (currentHour === 13) {
+          // Lunch at 1 PM
           hourId = "lunch";
-        }
-
-        // Highlight the cell if the hour matches
-        if (hourId) {
-          const hourCell = document.getElementById(hourId);
-          if (hourCell) {
-            if (hourId == "lunch") {
-              msg = "Lunch Time! &#x1F957;";
-            } else {
-              msg = "Current Class is CM-" + hourCell.innerText;
-            }
-            hourCell.classList.add("current");
-          } else {
-            msg = "No Classes Scheduled at this time. Enjoy.";
+          const cell = document.getElementById("lunch");
+          if (cell) {
+            msg = `Current Time: Lunch Break 🍱`;
+            cell.classList.add("current");
+          }
+        } else if (currentHour >= 10 && currentHour <= 16) {
+          const cell = document.getElementById(hourId);
+          if (cell) {
+            const val = cell.innerText.trim();
+            const fullName = subNames[val] || val;
+            msg = `Current Class: ${val} - ${fullName}`;
+            cell.classList.add("current");
           }
         }
-        if (toDay == 0) {
-          msg = "Sunday ra babu! &#x263A;";
-        } else {
-          // Highlight the current day
-          const dayCell = document.getElementById(`${toDay}`);
-          dayCell.classList.add("current");
-        }
 
-        // Display current day and hour in the header
+        // Highlight current day
+        const dayCell = document.getElementById(`${toDay}`);
+        if (dayCell) dayCell.classList.add("current");
+
+        // Display time message
         document.getElementById("time").innerHTML = `${date.getDate()}:${
           date.getMonth() + 1
-        }:${date.getFullYear() % 100}, ${weeks[toDay]} ${currentHour}:${date
-          .getMinutes()
-          .toString()
-          .padStart(2, "0")} -  ${msg}`;
+        }:${date.getFullYear() % 100}, ${weeks[toDay]} ${
+          currentHour > 12 ? currentHour - 12 : currentHour
+        }:${date.getMinutes().toString().padStart(2, "0")} ${
+          currentHour >= 12 ? "PM" : "AM"
+        } - ${msg}`;
       }
 
-      // Update time and highlight every minute
       updateTimeAndHighlight();
       setInterval(updateTimeAndHighlight, 10000);
     </script>

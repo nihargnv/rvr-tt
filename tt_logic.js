@@ -10,7 +10,6 @@ const weeks = {
 
 // Timetable for CM-3A (A-section)
 const TimingsTable = {
-
   "1-10": "CM314",
   "1-11": "LIB",
   "1-12": "CM313",
@@ -69,66 +68,6 @@ const subNames = {
   "LIB": "Library",
   "SPORTS": "Sports",
   "l": "Lunch"
-=======
-  "1-8": "222",
-  "1-9": "223",
-  "1-10": "225",
-  "1-11": "l",
-  "1-12": "262",
-  "1-13": "262",
-  "1-14": "262",
-  "2-8": "221",
-  "2-9": "224",
-  "2-10": "mc4",
-  "2-11": "l",
-  "2-12": "261",
-  "2-13": "261",
-  "2-14": "261",
-  "3-8": "263",
-  "3-9": "263",
-  "3-10": "263",
-  "3-11": "l",
-  "3-12": "224",
-  "3-13": "223",
-  "3-14": "222",
-  "4-8": "sl-2",
-  "4-9": "sl-2",
-  "4-10": "222",
-  "4-11": "l",
-  "4-12": "221",
-  "4-13": "225",
-  "4-14": "lib",
-  "5-8": "223",
-  "5-9": "221",
-  "5-10": "224",
-  "5-11": "l",
-  "5-12": "sl-2",
-  "5-13": "225",
-  "5-14": "222",
-  "6-8": "222",
-  "6-9": "224",
-  "6-10": "225",
-  "6-11": "l",
-  "6-12": "221",
-  "6-13": "224",
-  "6-14": "sp",
-};
-
-const subNames = {
-  "221": "Computational Statistics ",
-  "222": "Artificial Intelligence ",
-  "223": "Operating systems ",
-  "224": "Software Engineering ",
-  "225": "DAA",
-  "261": "Computational Stat. Lab",
-  "262": "AI Lab",
-  "263": "DAA Lab",
-  "l": "Lunch",
-  "sl-2": "Server-side Scripting",
-  "mc4": "Srofessional Ethics & Human values ",
-  "lib": "Library and Sports",
-  "sp": "Sports",
-
 };
 
 function updateTime() {
